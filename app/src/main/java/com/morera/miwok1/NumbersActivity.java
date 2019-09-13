@@ -17,23 +17,22 @@ public class NumbersActivity extends AppCompatActivity {
 //       GridView rootview = findViewById(R.id.rootView);
         ListView rootview = findViewById(R.id.list);
 
-        ArrayList<Word> words = new ArrayList<>();
+        ArrayList<Wordcustomclass> words = new ArrayList<>();
 
-        words.add(new Word("one", "lutti"));
-        words.add(new Word("two", "otiiko"));
-        words.add(new Word("three", "tolookosu"));
-        words.add(new Word("four", "oyyisa"));
-        words.add(new Word("five", "massokka"));
-        words.add(new Word("six", "temmokka"));
-        words.add(new Word("seven", "kenekaku"));
-        words.add(new Word("eight", "kawinta"));
-        words.add(new Word("nine", "wo’e"));
-        words.add(new Word("ten", "na’aacha"));
+        words.add(new Wordcustomclass("one", "lutti",R.drawable.number_one));
+        words.add(new Wordcustomclass("two", "otiiko",R.drawable.number_two));
+        words.add(new Wordcustomclass("three", "tolookosu",R.drawable.number_three));
+        words.add(new Wordcustomclass("four", "oyyisa",R.drawable.number_four));
+        words.add(new Wordcustomclass("five", "massokka",R.drawable.number_five));
+        words.add(new Wordcustomclass("six", "temmokka",R.drawable.number_six));
+        words.add(new Wordcustomclass("seven", "kenekaku",R.drawable.number_seven));
+        words.add(new Wordcustomclass("eight", "kawinta",R.drawable.number_eight));
+        words.add(new Wordcustomclass("nine", "wo’e",R.drawable.number_nine));
+        words.add(new Wordcustomclass("ten", "na’aacha",R.drawable.number_ten));
 
         WordAdapter itemAdapter =
                 new WordAdapter(this,words);
         rootview.setAdapter(itemAdapter);
-
 //          ArrayAdapter<String> itemsAdapter =
 //          new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,words);
 //          rootview.setAdapter(itemsAdapter);
