@@ -8,16 +8,19 @@ public class Wordcustomclass {
     private String mMiwokTranslation;
     private int miCon = NO_IMAGE_PROVIDED;
     private static final int NO_IMAGE_PROVIDED = -1;
+    private int mAudio;
 
-    public Wordcustomclass(String defaultTranslation, String miwokTranslation) {
+    public Wordcustomclass(String defaultTranslation, String miwokTranslation, int audio) {
         mDefaultTranslation = defaultTranslation;
         mMiwokTranslation= miwokTranslation;
+        mAudio = audio;
     }
 
-    public Wordcustomclass(String defaultTranslation, String miwokTranslation, int iCon) {
+    public Wordcustomclass(String defaultTranslation, String miwokTranslation, int iCon, int audio) {
         mDefaultTranslation = defaultTranslation;
         mMiwokTranslation= miwokTranslation;
         miCon = iCon;
+        mAudio = audio;
     }
 
     public String getDefaultTranslation() {
@@ -31,6 +34,11 @@ public class Wordcustomclass {
     public int getMiCon() {
         return miCon;
     }
+
+    public int getAudio() {
+        return mAudio;
+    }
+
 
     public boolean hasImage () {
         return miCon != NO_IMAGE_PROVIDED;
