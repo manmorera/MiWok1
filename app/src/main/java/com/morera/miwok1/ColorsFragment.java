@@ -1,27 +1,24 @@
 package com.morera.miwok1;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import java.util.ArrayList;
 
-public class ColorsActivity extends AppCompatActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, new ColorsFragment())
-                .commit();
-    }
-}
 /**
+ * A simple {@link Fragment} subclass.
+ */
+public class ColorsFragment extends Fragment {
+
     private MediaPlayer mMediaPlayer;
     private MediaPlayer.OnCompletionListener mDone = new MediaPlayer.OnCompletionListener() {
         @Override
@@ -30,11 +27,16 @@ public class ColorsActivity extends AppCompatActivity {
         }
     };
 
+
+    public ColorsFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list);
-        ListView rootview = findViewById(R.id.list);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootview = inflater.inflate(R.layout.word_list, container, false);
 
         final ArrayList<Wordcustomclass> wordsArray = new ArrayList<>();
 
@@ -48,33 +50,35 @@ public class ColorsActivity extends AppCompatActivity {
         wordsArray.add(new Wordcustomclass("mustard yellow", "chiwiiṭә", R.drawable.color_mustard_yellow, R.raw.color_mustard_yellow));
 
         WordAdapter itemAdapter =
-                new WordAdapter(this, wordsArray, R.color.category_colors);
-        rootview.setAdapter(itemAdapter);
+                new WordAdapter(getActivity(), wordsArray, R.color.category_colors);
+        ListView listview = rootview.findViewById(R.id.list);
+        listview.setAdapter(itemAdapter);
 
-        rootview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 release();
                 Wordcustomclass word = wordsArray.get(position);
 
-                Toast.makeText(ColorsActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
-                mMediaPlayer = MediaPlayer.create(ColorsActivity.this, word.getAudio());
+                Toast.makeText(getActivity(), "Position: " + position, Toast.LENGTH_SHORT).show();
+                mMediaPlayer = MediaPlayer.create(getActivity(), word.getAudio());
                 mMediaPlayer.start();
                 mMediaPlayer.setOnCompletionListener(mDone);
             }
         });
+        return rootview;
     }
-        private void release () {
-            if (mMediaPlayer != null) {
-                mMediaPlayer.release();
-                mMediaPlayer = null;
-            }
+
+    private void release() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
         }
+    }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         release();
     }
 }
-*/

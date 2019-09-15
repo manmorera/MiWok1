@@ -1,7 +1,4 @@
 package com.morera.miwok1;
-
-import android.widget.ImageView;
-
 public class Wordcustomclass {
 
     private String mDefaultTranslation;
@@ -38,7 +35,6 @@ public class Wordcustomclass {
     public int getAudio() {
         return mAudio;
     }
-
 
     public boolean hasImage () {
         return miCon != NO_IMAGE_PROVIDED;

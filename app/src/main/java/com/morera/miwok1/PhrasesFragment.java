@@ -1,41 +1,42 @@
 package com.morera.miwok1;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import java.util.ArrayList;
 
-public class PhrasesActivity extends AppCompatActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, new PhrasesFragment())
-                .commit();
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class PhrasesFragment extends Fragment {
+
+    private MediaPlayer mMediaPlayer;
+    private MediaPlayer.OnCompletionListener mDone = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            release();
+        }
+    };
+
+
+    public PhrasesFragment() {
+        // Required empty public constructor
     }
-}
 
-    /**
-        private MediaPlayer mMediaPlayer;
-        private MediaPlayer.OnCompletionListener mDone = new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                release();
-            }
-        };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list);
-        ListView rootview = findViewById(R.id.list);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootview = inflater.inflate(R.layout.word_list, container, false);
 
         final ArrayList<Wordcustomclass> wordsArray = new ArrayList<>();
 
@@ -51,32 +52,35 @@ public class PhrasesActivity extends AppCompatActivity {
         wordsArray.add(new Wordcustomclass("Come here.", "chiwiiṭә",R.raw.phrase_come_here));
 
         WordAdapter itemAdapter =
-                new WordAdapter(this, wordsArray, R.color.category_phrases);
-        rootview.setAdapter(itemAdapter);
+                new WordAdapter(getActivity(), wordsArray, R.color.category_phrases);
+        ListView listview = rootview.findViewById(R.id.list);
+        listview.setAdapter(itemAdapter);
 
-        rootview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 release();
                 Wordcustomclass word = wordsArray.get(position);
 
-                Toast.makeText(PhrasesActivity.this, "Position: " + position, Toast.LENGTH_SHORT).show();
-                mMediaPlayer = MediaPlayer.create(PhrasesActivity.this, word.getAudio());
+                Toast.makeText(getActivity(), "Position: " + position, Toast.LENGTH_SHORT).show();
+                mMediaPlayer = MediaPlayer.create(getActivity(), word.getAudio());
                 mMediaPlayer.start();
                 mMediaPlayer.setOnCompletionListener(mDone);
             }
         });
+        return rootview;
     }
-        private void release() {
-            if (mMediaPlayer != null) {
-                mMediaPlayer.release();
-                mMediaPlayer = null;
-            }
+
+    private void release() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
         }
+    }
+
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         release();
     }
-    }
-     */
+}
